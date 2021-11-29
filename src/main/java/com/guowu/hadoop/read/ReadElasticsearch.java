@@ -17,6 +17,7 @@ public class ReadElasticsearch {
         conf.set("es.nodes", "192.168.10.108:9200");
         conf.set("es.resource", "artists_2");
         conf.set("es.read.metadata", "true");
+        conf.set("es.read.metadata.field", "_metadata");
         conf.set("es.query", "{\n" +
                 "    \"query\":{\n" +
                 "        \"match_all\":{}\n" +

@@ -12,13 +12,15 @@ import java.util.Map;
 
 @Slf4j
 public class EsReduce extends Reducer<Text, MapWritable, Text, Text> {
+    private final static String METADATA = "_metadata";
+
     @Override
     protected void reduce(Text key, Iterable<MapWritable> values, Context context) throws IOException, InterruptedException {
         StringBuffer s = new StringBuffer();
         for (MapWritable value : values) {
             for (Map.Entry<Writable, Writable> writableWritableEntry : value.entrySet()) {
                 Text key1 = (Text) writableWritableEntry.getKey();
-                if ((writableWritableEntry.getValue() instanceof LinkedMapWritable)) {
+                if (METADATA.equalsIgnoreCase(writableWritableEntry.getKey().toString())) {
                     LinkedMapWritable linkedMapWritable = (LinkedMapWritable) writableWritableEntry.getValue();
                     s.append(key1.toString() + " ");
                     for (Map.Entry<Writable, Writable> writableEntry : linkedMapWritable.entrySet()) {
