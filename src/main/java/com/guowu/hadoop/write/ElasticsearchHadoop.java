@@ -20,9 +20,6 @@ public class ElasticsearchHadoop {
         conf.set("es.resource", "/artists_2");
         conf.set("es.write.operation", "upsert");
         conf.set("es.mapping.include", "id");
-        ArrayList<String> strings = new ArrayList<>();
-        strings.add("name");
-        strings.add("id");
         conf.set("es.mapping.id", "id");
         Job job = Job.getInstance(conf);
         job.setJarByClass(ElasticsearchHadoop.class);

@@ -13,15 +13,9 @@ import java.io.IOException;
 
 public class ReadElasticsearch {
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
-
-
         Configuration conf = new Configuration();
         conf.set("es.nodes", "192.168.10.108:9200");
         conf.set("es.resource", "artists_2");
-        //   uri (or parameter) query
-        //conf.set("es.query", "?q=id:*");
-        //   query dsl
-        //   es.query = { "query" : { "term" : { "user" : "costinl" } } }
         conf.set("es.query", "{\n" +
                 "    \"query\":{\n" +
                 "        \"match_all\":{}\n" +
@@ -30,7 +24,6 @@ public class ReadElasticsearch {
         org.apache.hadoop.mapreduce.Job job = Job.getInstance(conf);
         job.setInputFormatClass(EsInputFormat.class);
 
-        job.setMapperClass(EsMapper.class);
         job.setReducerClass(EsReduce.class);
 
         job.setMapOutputKeyClass(Text.class);
