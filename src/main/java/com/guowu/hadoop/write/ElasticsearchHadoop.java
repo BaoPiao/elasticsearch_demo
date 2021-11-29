@@ -1,4 +1,4 @@
-package com.guowu.hadoop.read.write;
+package com.guowu.hadoop.write;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;

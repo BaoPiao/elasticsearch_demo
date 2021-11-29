@@ -1,4 +1,4 @@
-package com.guowu.hadoop.read.write;
+package com.guowu.hadoop.write;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.io.*;

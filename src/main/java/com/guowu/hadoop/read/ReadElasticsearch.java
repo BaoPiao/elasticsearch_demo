@@ -5,6 +5,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.MapWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.MapFileOutputFormat;
 import org.elasticsearch.hadoop.mr.EsInputFormat;
 
@@ -16,8 +17,16 @@ public class ReadElasticsearch {
 
         Configuration conf = new Configuration();
         conf.set("es.nodes", "192.168.10.108:9200");
-        conf.set("es.resource", "artists");
-        conf.set("es.query", "?q=id:*");             // replace this with the relevant query
+        conf.set("es.resource", "artists_2");
+        //   uri (or parameter) query
+        //conf.set("es.query", "?q=id:*");
+        //   query dsl
+        //   es.query = { "query" : { "term" : { "user" : "costinl" } } }
+        conf.set("es.query", "{\n" +
+                "    \"query\":{\n" +
+                "        \"match_all\":{}\n" +
+                "    }\n" +
+                "}");
         org.apache.hadoop.mapreduce.Job job = Job.getInstance(conf);
         job.setInputFormatClass(EsInputFormat.class);
 
@@ -28,8 +37,8 @@ public class ReadElasticsearch {
         job.setMapOutputValueClass(MapWritable.class);
 
 
-        MapFileOutputFormat.setOutputPath(job, new Path("D:\\hadoop\\outputES"));
-//        FileOutputFormat.setOutputPath(job, new Path("D:\\hadoop\\outputES"));
+//        MapFileOutputFormat.setOutputPath(job, new Path("D:\\hadoop\\outputES"));
+        FileOutputFormat.setOutputPath(job, new Path("D:\\hadoop\\outputES"));
         boolean b = job.waitForCompletion(true);
         System.exit(b ? 0 : 1);
     }
