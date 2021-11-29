@@ -1,22 +1,35 @@
 package com.guowu.hadoop.read;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.io.MapWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapreduce.*;
+import org.elasticsearch.hadoop.mr.LinkedMapWritable;
 
 import java.io.IOException;
 import java.util.Map;
 
+@Slf4j
 public class EsReduce extends Reducer<Text, MapWritable, Text, Text> {
     @Override
     protected void reduce(Text key, Iterable<MapWritable> values, Context context) throws IOException, InterruptedException {
         StringBuffer s = new StringBuffer();
         for (MapWritable value : values) {
             for (Map.Entry<Writable, Writable> writableWritableEntry : value.entrySet()) {
-                Text value1 = (Text) writableWritableEntry.getValue();
                 Text key1 = (Text) writableWritableEntry.getKey();
-                s.append(value1 + ":" + key1 + " ");
+                if ((writableWritableEntry.getValue() instanceof LinkedMapWritable)) {
+                    LinkedMapWritable linkedMapWritable = (LinkedMapWritable) writableWritableEntry.getValue();
+                    s.append(key1.toString() + " ");
+                    for (Map.Entry<Writable, Writable> writableEntry : linkedMapWritable.entrySet()) {
+                        Text key2 = (Text) writableEntry.getKey();
+                        Text value1 = (Text) writableEntry.getValue();
+                        s.append(key2 + ":" + value1 + " ");
+                    }
+                } else {
+                    Text value1 = (Text) writableWritableEntry.getValue();
+                    s.append(key1 + ":" + value1 + " ");
+                }
             }
             Text text = new Text(s.toString());
             context.write(key, text);
