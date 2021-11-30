@@ -22,7 +22,7 @@ public class EsReduce extends Reducer<Text, MapWritable, Text, Text> {
                 Text key1 = (Text) writableWritableEntry.getKey();
                 if (METADATA.equalsIgnoreCase(writableWritableEntry.getKey().toString())) {
                     LinkedMapWritable linkedMapWritable = (LinkedMapWritable) writableWritableEntry.getValue();
-                    s.append(key1.toString() + " ");
+                    s.append(key1+ " ");
                     for (Map.Entry<Writable, Writable> writableEntry : linkedMapWritable.entrySet()) {
                         Text key2 = (Text) writableEntry.getKey();
                         Text value1 = (Text) writableEntry.getValue();

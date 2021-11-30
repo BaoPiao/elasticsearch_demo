@@ -25,12 +25,9 @@ public class ElasticsearchHadoop {
         job.setJarByClass(ElasticsearchHadoop.class);
         job.setOutputFormatClass(EsOutputFormat.class);
         job.setMapperClass(EsMapper.class);
-
         job.setMapOutputKeyClass(NullWritable.class);
         job.setMapOutputValueClass(MapWritable.class);
-
-        FileInputFormat.setInputPaths(job, new Path("hdfs://192.168.10.108:9000/test"));
-
+        FileInputFormat.setInputPaths(job, new Path("data"));
         boolean b = job.waitForCompletion(true);
         System.exit(b ? 0 : 1);
 

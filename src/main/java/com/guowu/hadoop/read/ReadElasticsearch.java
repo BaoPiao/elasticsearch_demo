@@ -31,8 +31,6 @@ public class ReadElasticsearch {
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(MapWritable.class);
 
-
-//        MapFileOutputFormat.setOutputPath(job, new Path("D:\\hadoop\\outputES"));
         FileOutputFormat.setOutputPath(job, new Path("D:\\hadoop\\outputES"));
         boolean b = job.waitForCompletion(true);
         System.exit(b ? 0 : 1);
