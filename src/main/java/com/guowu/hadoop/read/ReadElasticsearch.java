@@ -25,7 +25,7 @@ public class ReadElasticsearch {
                 "}");
         org.apache.hadoop.mapreduce.Job job = Job.getInstance(conf);
         job.setInputFormatClass(EsInputFormat.class);
-
+        job.setJarByClass(ReadElasticsearch.class);
         job.setReducerClass(EsReduce.class);
 
         job.setMapOutputKeyClass(Text.class);
