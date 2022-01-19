@@ -1,0 +1,19 @@
+<assembly>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+
+        <fileSet>
+            <directory>${profile.dir}</directory>
+            <outputDirectory>/</outputDirectory>
+            <!-- 表示的是包含下面格式的资源文件 -->
+            <includes>
+
+                <include>*.properties</include>
+
+                <include>**/*.properties</include>
+            </includes>
+            <fileMode>0644</fileMode>
+        </fileSet>
+    </fileSets>
+
+</assembly>
